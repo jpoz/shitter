@@ -12,6 +12,9 @@ SOURCES := $(shell find $(SOURCEDIR) -name '**/*.go')
 $(BINARY): $(SOURCES)
 	go build -o ${BINARY} cmd/shitter/main.go
 
+drop:
+	go build -o drop cmd/drop/main.go
+
 .PHONY: install
 install:
 	go install ${LDFLAGS} ./...
@@ -19,6 +22,7 @@ install:
 .PHONY: clean
 clean:
 	if [ -f ${BINARY} ] ; then rm ${BINARY} ; fi
+	if [ -f drop ] ; then rm drop; fi
 
 .PHONY: assets
 assets:
@@ -27,3 +31,7 @@ assets:
 .PHONY: run
 run: clean $(BINARY)
 	./$(BINARY) test.png out.png
+
+.PHONY: drop
+run_drop: clean drop 
+	./drop
